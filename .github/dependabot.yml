@@ -1,0 +1,18 @@
+version: 2
+updates:
+  - package-ecosystem: "gradle"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    target-branch: "main"
+    groups:
+      kotlin:
+        patterns:
+          - "org.jetbrains.kotlin*"
+        applies-to: version-updates
+      compose:
+        patterns:
+          - "org.jetbrains.compose*"
+          - "androidx.activity:activity-compose"
+          - "org.jetbrains.androidx*compose"
+        applies-to: version-updates
