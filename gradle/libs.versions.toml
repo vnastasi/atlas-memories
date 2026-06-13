@@ -11,6 +11,8 @@ androidx-lifecycle = "2.11.0-beta01"
 
 composeMultiplatform = "1.11.1"
 
+detekt = "2.0.0-alpha.3"
+
 kotlin = "2.4.0"
 kotlinx-coroutines = "1.11.0"
 
@@ -42,6 +44,8 @@ android-multiplatformLibrary = { id = "com.android.kotlin.multiplatform.library"
 
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "composeMultiplatform" }
+
+detekt = { id = "dev.detekt", version.ref = "detekt" }
 
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
