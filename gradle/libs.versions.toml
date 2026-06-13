@@ -16,6 +16,8 @@ detekt = "2.0.0-alpha.3"
 kotlin = "2.4.0"
 kotlinx-coroutines = "1.11.0"
 
+kover = "0.9.8"
+
 material3 = "1.11.0-alpha07"
 
 
@@ -49,3 +51,5 @@ detekt = { id = "dev.detekt", version.ref = "detekt" }
 
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+
+kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
