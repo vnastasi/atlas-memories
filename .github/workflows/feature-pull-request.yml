@@ -1,0 +1,54 @@
+name: "Pull request"
+
+on:
+  pull_request:
+    branches:
+      - "main"
+    types:
+      - opened
+      - synchronize
+
+permissions:
+  contents: write
+  pull-requests: write
+
+env:
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  build:
+    name: "Build"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Check out repository"
+        uses: actions/checkout@v6.0.2
+
+      - name: "Set up Gradle"
+        uses: gradle/actions/setup-gradle@v6
+        with:
+          cache-provider: basic
+          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
+
+      - name: "Assemble desktop application"
+        shell: bash
+        run: ./gradlew :desktopApp:assemble
+
+      - name: "Assemble Android application"
+        shell: bash
+        run: ./gradlew :androidApp:assemble
+
+      - name: "Run unit tests"
+        shell: bash
+        run: |
+          ./gradlew :shared:jvmTest
+          ./gradlew :shared:testAndroidHostTest
+          ./gradlew :androidApp:testDebugUnitTest
+          ./gradlew :desktopApp:test
+
+      - name: "Verify code coverage"
+        shell: bash
+        run: ./gradlew koverVerify
+
+      - name: "Detekt"
+        shell: bash
+        run: ./gradlew detekt
