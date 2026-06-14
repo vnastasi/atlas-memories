@@ -8,6 +8,7 @@ on:
 
 env:
   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  GRADLE_ENCRYPTION_KEY: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
 
 jobs:
   build:
@@ -21,8 +22,9 @@ jobs:
       - name: "Set up Gradle"
         uses: gradle/actions/setup-gradle@v6
         with:
-          cache-provider: basic
-          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
+          cache-provider: enhanced
+          cache-read-only: false
+          cache-encryption-key: ${{ env.GRADLE_ENCRYPTION_KEY }}
 
       - name: "Assemble desktop application"
         shell: bash
