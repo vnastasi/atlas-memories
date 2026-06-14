@@ -42,9 +42,7 @@ jobs:
       - name: "Run unit tests"
         shell: bash
         run: |
-          ./gradlew :shared:commonTest
-          ./gradlew :shared:jvmTest
-          ./gradlew :shared:testAndroidHostTest
+          ./gradlew :shared:allTests
           ./gradlew :desktopApp:test
           ./gradlew :androidApp:testDebugUnitTest
 
