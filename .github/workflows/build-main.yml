@@ -1,0 +1,33 @@
+name: "Build main"
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "main"
+
+env:
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  build:
+    name: "Build"
+    runs-on: ubuntu-latest
+    permissions: write-all
+    steps:
+      - name: "Check out repository"
+        uses: actions/checkout@v6.0.2
+
+      - name: "Set up Gradle"
+        uses: gradle/actions/setup-gradle@v6
+        with:
+          cache-provider: basic
+          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
+
+      - name: "Assemble desktop application"
+        shell: bash
+        run: ./gradlew :desktopApp:assemble
+
+      - name: "Assemble Android application"
+        shell: bash
+        run: ./gradlew :androidApp:assemble
