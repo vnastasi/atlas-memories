@@ -42,10 +42,9 @@ jobs:
       - name: "Run unit tests"
         shell: bash
         run: |
-          ./gradlew :shared:jvmTest
-          ./gradlew :shared:testAndroidHostTest
-          ./gradlew :androidApp:testDebugUnitTest
+          ./gradlew :shared:allTests
           ./gradlew :desktopApp:test
+          ./gradlew :androidApp:testDebugUnitTest
 
       - name: "Verify code coverage"
         shell: bash
@@ -53,4 +52,9 @@ jobs:
 
       - name: "Detekt"
         shell: bash
-        run: ./gradlew detekt
+        run: |
+          ./gradlew :shared:detektCommonMain
+          ./gradlew :shared:detektJvmMain
+          ./gradlew :shared:detektAndroidMain
+          ./gradlew :desktopApp:detektMain
+          ./gradlew :androidApp:detektMain
