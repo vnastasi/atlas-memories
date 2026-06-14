@@ -58,3 +58,9 @@ jobs:
           ./gradlew :shared:detektAndroidMain
           ./gradlew :desktopApp:detektMain
           ./gradlew :androidApp:detektMain
+
+      - name: "Auto merge Dependabot updates"
+        if: startsWith(github.head_ref, 'dependabot/')
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+        run: gh pr merge --auto --squash $PR_URL
