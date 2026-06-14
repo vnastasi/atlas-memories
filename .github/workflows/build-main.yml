@@ -8,6 +8,7 @@ on:
 
 env:
   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  GRADLE_ENCRYPTION_KEY: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
 
 jobs:
   build:
@@ -23,7 +24,7 @@ jobs:
         with:
           cache-provider: enhanced
           cache-read-only: false
-          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
+          cache-encryption-key: ${{ env.GRADLE_ENCRYPTION_KEY }}
 
       - name: "Assemble desktop application"
         shell: bash
