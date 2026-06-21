@@ -24,11 +24,11 @@ class JvmMetadataExtractor : MetadataExtractor {
                 val latitude = gpsInfo?.latitudeAsDegreesNorth
                 val longitude = gpsInfo?.longitudeAsDegreesEast
 
-                Metadata(createdAt = dateTime, latitude = latitude, longitude = longitude)
+                Metadata(dateTimeCreated = dateTime, latitude = latitude, longitude = longitude)
             }
 
             else -> {
-                Metadata(createdAt = null, latitude = null, longitude = null)
+                Metadata(dateTimeCreated = null, latitude = null, longitude = null)
             }
         }
 }

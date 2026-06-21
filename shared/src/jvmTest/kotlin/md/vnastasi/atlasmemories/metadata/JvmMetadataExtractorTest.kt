@@ -49,7 +49,7 @@ class JvmMetadataExtractorTest {
     fun metadataWithGpsExtractedCorrectly() {
         val metadata = MetadataExtractor.default().extract(root.resolve("sample.jpg"))
         assertThat(metadata).all {
-            prop(Metadata::createdAt).isNotNull().isEqualTo(LocalDateTime.orNull(year = 2025, month = 3, day = 10, hour = 13, minute = 29, second = 32, nanosecond = 0))
+            prop(Metadata::dateTimeCreated).isNotNull().isEqualTo(LocalDateTime.orNull(year = 2025, month = 3, day = 10, hour = 13, minute = 29, second = 32, nanosecond = 0))
             prop(Metadata::latitude).isNotNull().isCloseTo(value = 25.74028, delta = 0.0001)
             prop(Metadata::longitude).isNotNull().isCloseTo(value = 32.60169, delta = 0.0001)
         }
@@ -66,7 +66,7 @@ class JvmMetadataExtractorTest {
     fun metadataWithNoGpsExtractedCorrectly() {
         val metadata = MetadataExtractor.default().extract(root.resolve("sample-no-gps-data.jpg"))
         assertThat(metadata).all {
-            prop(Metadata::createdAt).isNotNull().isEqualTo(LocalDateTime.orNull(year = 2016, month = 1, day = 5, hour = 11, minute = 3, second = 42, nanosecond = 0))
+            prop(Metadata::dateTimeCreated).isNotNull().isEqualTo(LocalDateTime.orNull(year = 2016, month = 1, day = 5, hour = 11, minute = 3, second = 42, nanosecond = 0))
             prop(Metadata::latitude).isNull()
             prop(Metadata::longitude).isNull()
         }
