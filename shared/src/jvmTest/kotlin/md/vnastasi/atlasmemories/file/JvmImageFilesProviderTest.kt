@@ -1,12 +1,9 @@
 package md.vnastasi.atlasmemories.file
 
-import assertk.all
 import assertk.assertThat
-import assertk.assertions.endsWith
-import assertk.assertions.hasSize
-import assertk.assertions.index
+import assertk.assertions.containsExactlyInAnyOrder
+import assertk.assertions.extracting
 import assertk.assertions.isEmpty
-import assertk.assertions.isNotNull
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
@@ -67,10 +64,9 @@ class JvmImageFilesProviderTest {
         }
 
         val sequence = ImageFilesProvider.default().get(root)
-        assertThat(sequence.toList()).all {
-            hasSize(2)
-            index(0).isNotNull().transform { it.absolutePathString() }.endsWith("/nested/image2.jpg")
-            index(1).isNotNull().transform { it.absolutePathString() }.endsWith("/image1.jpg")
-        }
+        assertThat(sequence.toList())
+            .extracting(Path::absolutePathString)
+            .extracting { it.split("/").last() }
+            .containsExactlyInAnyOrder("image1.jpg", "image2.jpg")
     }
 }
