@@ -21,9 +21,11 @@ kotlin {
         compilerOptions {
             jvmTarget = JvmTarget.JVM_11
         }
+
         androidResources {
             enable = true
         }
+
         withHostTest {
             isIncludeAndroidResources = true
         }
@@ -46,6 +48,7 @@ kotlin {
 
         commonTest {
             dependencies {
+                implementation(libs.assertk)
                 implementation(libs.kotlin.test)
             }
         }
@@ -56,9 +59,25 @@ kotlin {
             }
         }
 
+        getByName("androidHostTest") {
+            dependencies {
+                implementation(libs.assertk)
+                implementation(libs.junit.jupiter.api)
+                runtimeOnly(libs.junit.jupiter.engine)
+            }
+        }
+
         jvmMain {
             dependencies {
                 implementation(libs.commons.imaging)
+            }
+        }
+
+        jvmTest {
+            dependencies {
+                implementation(libs.assertk)
+                implementation(libs.junit.jupiter.api)
+                runtimeOnly(libs.junit.jupiter.engine)
             }
         }
     }
@@ -66,6 +85,10 @@ kotlin {
 
 dependencies {
     androidRuntimeClasspath(libs.compose.uiTooling)
+}
+
+tasks.withType<Test>().configureEach {
+    useJUnitPlatform()
 }
 
 tasks.withType<Detekt>().configureEach {
