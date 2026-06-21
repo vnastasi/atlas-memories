@@ -21,37 +21,63 @@ kotlin {
         compilerOptions {
             jvmTarget = JvmTarget.JVM_11
         }
+
         androidResources {
             enable = true
         }
+
         withHostTest {
             isIncludeAndroidResources = true
         }
     }
 
     sourceSets {
+        commonMain {
+            dependencies {
+                implementation(libs.androidx.lifecycle.runtimeCompose)
+                implementation(libs.androidx.lifecycle.viewmodelCompose)
+                implementation(libs.compose.components.resources)
+                implementation(libs.compose.foundation)
+                implementation(libs.compose.material3)
+                implementation(libs.compose.runtime)
+                implementation(libs.compose.ui)
+                implementation(libs.compose.uiToolingPreview)
+                implementation(libs.kotlinx.datetime)
+            }
+        }
+
+        commonTest {
+            dependencies {
+                implementation(libs.assertk)
+                implementation(libs.kotlin.test)
+            }
+        }
+
         androidMain {
             dependencies {
                 implementation(libs.compose.uiToolingPreview)
             }
         }
 
-        commonMain {
+        getByName("androidHostTest") {
             dependencies {
-                implementation(libs.compose.runtime)
-                implementation(libs.compose.foundation)
-                implementation(libs.compose.material3)
-                implementation(libs.compose.ui)
-                implementation(libs.compose.components.resources)
-                implementation(libs.compose.uiToolingPreview)
-                implementation(libs.androidx.lifecycle.viewmodelCompose)
-                implementation(libs.androidx.lifecycle.runtimeCompose)
+                implementation(libs.assertk)
+                implementation(libs.junit.jupiter.api)
+                runtimeOnly(libs.junit.jupiter.engine)
             }
         }
 
-        commonTest {
+        jvmMain {
             dependencies {
-                implementation(libs.kotlin.test)
+                implementation(libs.commons.imaging)
+            }
+        }
+
+        jvmTest {
+            dependencies {
+                implementation(libs.assertk)
+                implementation(libs.junit.jupiter.api)
+                runtimeOnly(libs.junit.jupiter.engine)
             }
         }
     }
@@ -59,6 +85,10 @@ kotlin {
 
 dependencies {
     androidRuntimeClasspath(libs.compose.uiTooling)
+}
+
+tasks.withType<Test>().configureEach {
+    useJUnitPlatform()
 }
 
 tasks.withType<Detekt>().configureEach {
