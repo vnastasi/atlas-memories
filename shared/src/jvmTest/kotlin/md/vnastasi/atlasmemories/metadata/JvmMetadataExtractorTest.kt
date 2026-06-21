@@ -29,9 +29,8 @@ class JvmMetadataExtractorTest {
     @BeforeEach
     fun setUp() {
         root.createDirectory()
-
-        this::class.java.classLoader.getResourceAsStream("sample.jpg")?.copyTo(root.resolve("sample.jpg").createFile().outputStream())
-        this::class.java.classLoader.getResourceAsStream("sample-no-gps-data.jpg")?.copyTo(root.resolve("sample-no-gps-data.jpg").createFile().outputStream())
+        copyImageFile("sample.jpg")
+        copyImageFile("sample-no-gps-data.jpg")
     }
 
     @AfterEach
@@ -71,5 +70,9 @@ class JvmMetadataExtractorTest {
             prop(Metadata::latitude).isNull()
             prop(Metadata::longitude).isNull()
         }
+    }
+
+    private fun copyImageFile(fileName: String) {
+        this::class.java.classLoader.getResourceAsStream(fileName)?.copyTo(root.resolve(fileName).createFile().outputStream())
     }
 }
