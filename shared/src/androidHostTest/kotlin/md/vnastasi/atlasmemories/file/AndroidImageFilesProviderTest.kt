@@ -67,6 +67,6 @@ class AndroidImageFilesProviderTest {
         assertThat(sequence.toList())
             .extracting(Path::absolutePathString)
             .extracting { it.split("/").last() }
-            .containsExactlyInAnyOrder("image1.jpg", "image.jpg")
+            .containsExactlyInAnyOrder("image1.jpg", "image2.jpg")
     }
 }
