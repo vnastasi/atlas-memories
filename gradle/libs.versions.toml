@@ -15,7 +15,7 @@ commons-imaging = "1.0.0-alpha6"
 
 composeMultiplatform = "1.11.1"
 
-detekt = "2.0.0-alpha.4"
+detekt = "2.0.0-alpha.5"
 
 junit = "6.1.0"
 
