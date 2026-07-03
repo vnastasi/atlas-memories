@@ -3,7 +3,7 @@ package md.vnastasi.atlasmemories.playground
 import kotlinx.datetime.format.FormatStringsInDatetimeFormats
 import md.vnastasi.atlasmemories.file.ImageFilesProvider
 import md.vnastasi.atlasmemories.file.default
-import md.vnastasi.atlasmemories.metadata.MetadataExtractor
+import md.vnastasi.atlasmemories.metadata.MetadataReader
 import md.vnastasi.atlasmemories.metadata.default
 import java.nio.file.Paths
 
@@ -14,11 +14,11 @@ fun main() {
     var counter = 0
 
     val imageFilesProvider = ImageFilesProvider.default()
-    val metadataExtractor = MetadataExtractor.default()
+    val metadataReader = MetadataReader.default()
 
     imageFilesProvider.get(Paths.get(IMAGE_ROOT_DIR))
         .forEach { path ->
-            val metadata = metadataExtractor.extract(path)
+            val metadata = metadataReader.read(path)
             println("File: $path")
             println("Created on: ${metadata.dateTimeCreated}")
             println("Latitude: ${metadata.latitude}")
