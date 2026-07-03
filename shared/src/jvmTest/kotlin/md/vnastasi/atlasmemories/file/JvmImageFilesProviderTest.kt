@@ -4,33 +4,14 @@ import assertk.assertThat
 import assertk.assertions.containsExactlyInAnyOrder
 import assertk.assertions.extracting
 import assertk.assertions.isEmpty
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import java.nio.file.Paths
-import kotlin.io.path.ExperimentalPathApi
+import org.junit.jupiter.api.io.TempDir
 import kotlin.io.path.absolutePathString
 import kotlin.io.path.createDirectory
 import kotlin.io.path.createFile
-import kotlin.io.path.deleteRecursively
-import kotlin.uuid.ExperimentalUuidApi
-import kotlin.uuid.Uuid
 
-@OptIn(ExperimentalPathApi::class, ExperimentalUuidApi::class)
 class JvmImageFilesProviderTest {
-
-    private val root = Paths.get(System.getProperty("java.io.tmpdir"), Uuid.generateV4().toHexString())
-
-    @BeforeEach
-    fun setUp() {
-        root.createDirectory()
-    }
-
-    @AfterEach
-    fun tearDown() {
-        root.deleteRecursively()
-    }
 
     @Test
     @DisplayName(
@@ -40,7 +21,7 @@ class JvmImageFilesProviderTest {
         Then return empty sequence
     """
     )
-    fun noImageFilesAvailable() {
+    fun noImageFilesAvailable(@TempDir root: Path) {
         val sequence = ImageFilesProvider.default().get(root)
         assertThat(sequence.toList()).isEmpty()
     }
@@ -53,7 +34,7 @@ class JvmImageFilesProviderTest {
         Then return sequence with image files
     """
     )
-    fun imageFilesProvidedCorrectly() {
+    fun imageFilesProvidedCorrectly(@TempDir root: Path) {
         root.apply {
             resolve("image1.jpg").createFile()
             resolve("video.mp4").createFile()
