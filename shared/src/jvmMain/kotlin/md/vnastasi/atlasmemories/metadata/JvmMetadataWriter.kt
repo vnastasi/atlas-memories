@@ -14,7 +14,6 @@ import kotlin.io.path.copyTo
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
-
 @OptIn(ExperimentalUuidApi::class)
 class JvmMetadataWriter : MetadataWriter {
 
