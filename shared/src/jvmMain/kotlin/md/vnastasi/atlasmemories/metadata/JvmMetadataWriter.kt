@@ -2,8 +2,6 @@ package md.vnastasi.atlasmemories.metadata
 
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.format
-import kotlinx.datetime.format.FormatStringsInDatetimeFormats
-import kotlinx.datetime.format.byUnicodePattern
 import md.vnastasi.atlasmemories.file.Path
 import org.apache.commons.imaging.Imaging
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata
@@ -15,7 +13,6 @@ import java.nio.file.Paths
 import kotlin.io.path.copyTo
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
-
 
 
 @OptIn(ExperimentalUuidApi::class)
