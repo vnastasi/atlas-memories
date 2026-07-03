@@ -22,7 +22,7 @@ import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
 @OptIn(ExperimentalUuidApi::class, ExperimentalPathApi::class)
-class JvmMetadataExtractorTest {
+class JvmMetadataReaderTest {
 
     private val root = Paths.get(System.getProperty("java.io.tmpdir"), Uuid.generateV4().toHexString())
 
@@ -47,7 +47,7 @@ class JvmMetadataExtractorTest {
     """
     )
     fun metadataWithGpsExtractedCorrectly() {
-        val metadata = MetadataExtractor.default().extract(root.resolve("sample.jpg"))
+        val metadata = MetadataReader.default().read(root.resolve("sample.jpg"))
         assertThat(metadata).all {
             prop(Metadata::dateTimeCreated).isNotNull().isEqualTo(LocalDateTime.orNull(year = 2025, month = 3, day = 10, hour = 13, minute = 29, second = 32, nanosecond = 0))
             prop(Metadata::latitude).isNotNull().isCloseTo(value = 25.74028, delta = 0.0001)
@@ -64,7 +64,7 @@ class JvmMetadataExtractorTest {
     """
     )
     fun metadataWithNoGpsExtractedCorrectly() {
-        val metadata = MetadataExtractor.default().extract(root.resolve("sample-no-gps-data.jpg"))
+        val metadata = MetadataReader.default().read(root.resolve("sample-no-gps-data.jpg"))
         assertThat(metadata).all {
             prop(Metadata::dateTimeCreated).isNotNull().isEqualTo(LocalDateTime.orNull(year = 2016, month = 1, day = 5, hour = 11, minute = 3, second = 42, nanosecond = 0))
             prop(Metadata::latitude).isNull()

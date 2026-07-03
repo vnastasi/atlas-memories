@@ -1,5 +1,5 @@
 package md.vnastasi.atlasmemories.metadata
 
-actual fun MetadataExtractor.Companion.default(): MetadataExtractor {
+actual fun MetadataWriter.Companion.default(): MetadataWriter {
     TODO("Not yet implemented")
 }
