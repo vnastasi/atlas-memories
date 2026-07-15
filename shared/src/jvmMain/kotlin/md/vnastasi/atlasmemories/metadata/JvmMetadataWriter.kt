@@ -2,7 +2,9 @@ package md.vnastasi.atlasmemories.metadata
 
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.format
+import md.vnastasi.atlasmemories.file.FileSystemFailureReason
 import md.vnastasi.atlasmemories.file.Path
+import md.vnastasi.atlasmemories.result.Result
 import org.apache.commons.imaging.Imaging
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata
 import org.apache.commons.imaging.formats.jpeg.exif.ExifRewriter
@@ -11,6 +13,7 @@ import org.apache.commons.imaging.formats.tiff.write.TiffOutputDirectory
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet
 import java.nio.file.Paths
 import kotlin.io.path.copyTo
+import kotlin.io.path.notExists
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
@@ -20,21 +23,32 @@ class JvmMetadataWriter : MetadataWriter {
     private val tmpDir = Paths.get(System.getProperty("java.io.tmpdir"))
     private val exifRewriter = ExifRewriter()
 
-    override fun write(path: Path, metadata: Metadata) {
+    override fun write(path: Path, metadata: Metadata): Result<Unit> {
+        if (tmpDir.notExists()) {
+            return Result.error(FileSystemFailureReason.DIRECTORY_NOT_FOUND, NoSuchFileException(tmpDir.toFile()))
+        }
+
         val sourceImageFile = path.copyTo(tmpDir.resolve("${Uuid.generateV4().toHexString()}.jpg")).toFile()
         val destinationImageFile = path.toFile()
 
-        destinationImageFile.outputStream().buffered().use { outputStream ->
+        val operationResult = destinationImageFile.outputStream().buffered().use { outputStream ->
             val tiffOutputSet = (Imaging.getMetadata(sourceImageFile) as? JpegImageMetadata)?.exif?.outputSet ?: TiffOutputSet()
             tiffOutputSet.setGpsInDegreesSafely(metadata.longitude, metadata.latitude)
 
             val exifDirectory = tiffOutputSet.orCreateExifDirectory
             exifDirectory.setDateTimeOriginal(metadata.dateTimeCreated)
 
-            exifRewriter.updateExifMetadataLossless(sourceImageFile, outputStream, tiffOutputSet)
+            try {
+                exifRewriter.updateExifMetadataLossless(sourceImageFile, outputStream, tiffOutputSet)
+                Result.success()
+            } catch (e: Exception) {
+                Result.error(MetadataFailureReason.METADATA_WRITE_FAILURE, e)
+            }
         }
 
         sourceImageFile.delete()
+
+        return operationResult
     }
 
     private fun TiffOutputDirectory.setDateTimeOriginal(dateTime: LocalDateTime?) {

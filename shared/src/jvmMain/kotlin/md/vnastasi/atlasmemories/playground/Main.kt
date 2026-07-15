@@ -3,8 +3,10 @@ package md.vnastasi.atlasmemories.playground
 import kotlinx.datetime.format.FormatStringsInDatetimeFormats
 import md.vnastasi.atlasmemories.file.ImageFilesProvider
 import md.vnastasi.atlasmemories.file.default
+import md.vnastasi.atlasmemories.metadata.Metadata
 import md.vnastasi.atlasmemories.metadata.MetadataReader
 import md.vnastasi.atlasmemories.metadata.default
+import md.vnastasi.atlasmemories.result.Result
 import java.nio.file.Paths
 
 private const val IMAGE_ROOT_DIR = "/Users/valentinnastasi/Pictures/Travels"
@@ -18,13 +20,22 @@ fun main() {
 
     imageFilesProvider.get(Paths.get(IMAGE_ROOT_DIR))
         .forEach { path ->
-            val metadata = metadataReader.read(path)
+            val result = metadataReader.read(path)
+
             println("File: $path")
-            println("Created on: ${metadata.dateTimeCreated}")
-            println("Latitude: ${metadata.latitude}")
-            println("Longitude: ${metadata.longitude}")
-            println("=======")
-            counter++
+            when (result) {
+                is Result.Success<Metadata> -> {
+                    println("Created on: ${result.data.dateTimeCreated}")
+                    println("Latitude: ${result.data.latitude}")
+                    println("Longitude: ${result.data.longitude}")
+                    println("=======")
+                    counter++
+                }
+
+                is Result.Error -> {
+                    println("Error: ${result.failureReason}")
+                }
+            }
         }
 
     println("Total: $counter")

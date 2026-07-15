@@ -4,10 +4,13 @@ import assertk.all
 import assertk.assertThat
 import assertk.assertions.isCloseTo
 import assertk.assertions.isEqualTo
+import assertk.assertions.isInstanceOf
 import assertk.assertions.isNotNull
+import assertk.assertions.isTrue
 import assertk.assertions.prop
 import kotlinx.datetime.LocalDateTime
 import md.vnastasi.atlasmemories.file.copyFromResource
+import md.vnastasi.atlasmemories.result.Result
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
@@ -40,10 +43,16 @@ class JvmMetadataWriterTest {
 
         assertDoesNotThrow { MetadataWriter.default().write(imageFilePath, metadata) }
 
-        assertThat(MetadataReader.default().read(imageFilePath)).all {
-            prop(Metadata::dateTimeCreated).isEqualTo(dateTimeCreated)
-            prop(Metadata::latitude).isNotNull().isCloseTo(latitude, delta = 0.0001)
-            prop(Metadata::longitude).isNotNull().isCloseTo(longitude, delta = 0.0001)
-        }
+        val writeResult = MetadataWriter.default().write(imageFilePath, metadata)
+        assertThat(writeResult.isSuccess()).isTrue()
+
+        val readResult = MetadataReader.default().read(imageFilePath)
+        assertThat(readResult)
+            .isInstanceOf<Result.Success<Metadata>>()
+            .prop(Result.Success<Metadata>::data).all {
+                prop(Metadata::dateTimeCreated).isEqualTo(dateTimeCreated)
+                prop(Metadata::latitude).isNotNull().isCloseTo(latitude, delta = 0.0001)
+                prop(Metadata::longitude).isNotNull().isCloseTo(longitude, delta = 0.0001)
+            }
     }
 }

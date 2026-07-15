@@ -35,6 +35,8 @@ sealed class Result<out T : Any> {
 
         fun <T : Any> success(data: T): Result<T> = Success(data)
 
+        fun success(): Result<Unit> = Success(Unit)
+
         fun <T : Any> error(failureReason: FailureReason, exception: Exception? = null): Result<T> = Error(failureReason, exception)
     }
 }
