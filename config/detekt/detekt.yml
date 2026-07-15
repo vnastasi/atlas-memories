@@ -293,7 +293,7 @@ exceptions:
     exceptionNames:
       - 'Error'
       - 'Exception'
-      - 'RuntimeException'JvmMetadataReader
+      - 'RuntimeException'
       - 'Throwable'
 
 naming:
