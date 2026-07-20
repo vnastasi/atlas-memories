@@ -19,11 +19,11 @@ detekt = "2.0.0-alpha.5"
 
 junit = "6.1.1"
 
-kotlin = "2.4.0"
+kotlin = "2.4.10"
 kotlinx-coroutines = "1.11.0"
 kotlinx-datetime = "0.8.0"
 
-kover = "0.9.8"
+kover = "0.9.9"
 
 material3 = "1.12.0-alpha03"
 
