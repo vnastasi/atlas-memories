@@ -23,7 +23,7 @@ kotlin = "2.4.20"
 kotlinx-coroutines = "1.11.0"
 kotlinx-datetime = "0.8.0"
 
-kover = "0.9.9"
+kover = "0.9.11"
 
 material3 = "1.13.0-alpha01"
 
