@@ -24,12 +24,20 @@ dependencies {
 
 android {
     namespace = "md.vnastasi.atlasmemories"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
+    compileSdk {
+        version = release(libs.versions.android.compileSdk.major.get().toInt()) {
+            minorApiLevel = libs.versions.android.compileSdk.minor.get().toInt()
+        }
+    }
 
     defaultConfig {
         applicationId = "md.vnastasi.atlasmemories"
-        minSdk = libs.versions.android.minSdk.get().toInt()
-        targetSdk = libs.versions.android.targetSdk.get().toInt()
+        minSdk {
+            version = release(libs.versions.android.minSdk.get().toInt())
+        }
+        targetSdk {
+            version = release(libs.versions.android.targetSdk.get().toInt())
+        }
         versionCode = 1
         versionName = "1.0"
     }
