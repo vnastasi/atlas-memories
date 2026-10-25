@@ -13,7 +13,7 @@ assertk = "0.28.1"
 
 commons-imaging = "1.0.0-alpha6"
 
-composeMultiplatform = "1.12.2"
+composeMultiplatform = "1.13.0-beta01"
 
 detekt = "2.0.0-alpha.6"
 
@@ -24,8 +24,6 @@ kotlinx-coroutines = "1.11.0"
 kotlinx-datetime = "0.8.0"
 
 kover = "0.9.9"
-
-material3 = "1.13.0-alpha02"
 
 
 [libraries]
@@ -40,7 +38,7 @@ commons-imaging = { module = "org.apache.commons:commons-imaging", version.ref =
 
 compose-components-resources = { module = "org.jetbrains.compose.components:components-resources", version.ref = "composeMultiplatform" }
 compose-foundation = { module = "org.jetbrains.compose.foundation:foundation", version.ref = "composeMultiplatform" }
-compose-material3 = { module = "org.jetbrains.compose.material3:material3", version.ref = "material3" }
+compose-material3 = { module = "org.jetbrains.compose.material3:material3", version.ref = "composeMultiplatform" }
 compose-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "composeMultiplatform" }
 compose-ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "composeMultiplatform" }
 compose-uiTooling = { module = "org.jetbrains.compose.ui:ui-tooling", version.ref = "composeMultiplatform" }
