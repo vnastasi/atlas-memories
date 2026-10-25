@@ -15,8 +15,14 @@ kotlin {
 
     android {
         namespace = "md.vnastasi.atlasmemories.shared"
-        compileSdk = libs.versions.android.compileSdk.get().toInt()
-        minSdk = libs.versions.android.minSdk.get().toInt()
+        compileSdk {
+            version = release(libs.versions.android.compileSdk.major.get().toInt()) {
+                minorApiLevel = libs.versions.android.compileSdk.minor.get().toInt()
+            }
+        }
+        minSdk {
+            version = release(libs.versions.android.minSdk.get().toInt())
+        }
 
         compilerOptions {
             jvmTarget = JvmTarget.JVM_11

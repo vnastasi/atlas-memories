@@ -2,7 +2,8 @@
 
 agp = "9.4.1"
 
-android-compileSdk = "37"
+android-compileSdk-major = "37"
+android-compileSdk-minor = "1"
 android-minSdk = "26"
 android-targetSdk = "37"
 
