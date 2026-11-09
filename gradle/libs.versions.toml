@@ -14,7 +14,7 @@ assertk = "0.28.1"
 
 commons-imaging = "1.0.0-alpha6"
 
-composeMultiplatform = "1.13.0-beta01"
+composeMultiplatform = "1.13.0-beta02"
 
 detekt = "2.0.0-alpha.6"
 
